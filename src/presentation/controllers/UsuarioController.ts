@@ -9,11 +9,13 @@ class UsuarioController {
     try {
       const { email, senha } = Request.body
 
-      const Usuario = await new PrismaClient().usuario.findFirst({
+      const Usuario: | any = await new PrismaClient().usuario.findFirst({
         where: { email },
 
         include: { postos: true },
       })
+
+      delete Usuario.senha
 
       if (!Usuario)
         return Response.status(401).send({ mensagem: 'Usuário Inexistente' })

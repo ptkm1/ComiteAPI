@@ -8,9 +8,9 @@ import { RotasUsuarios } from './presentation/routes/Usuario.routes'
 
 
 const app = express()
+app.use(cors())
 
 app.use(express.json())
-app.use(cors())
 app.use(express.static(`${__dirname}/documentation/public`))
 app.use(AdminRoutes)
 app.use(RotasUsuarios)
