@@ -24,6 +24,7 @@ model Usuario {
   postos     Posto[]
   RG         RG[]
   Historicos Historicos[]
+  Certidao   Certidao[]
 }
 
 model Posto {
@@ -36,11 +37,12 @@ model Posto {
 }
 
 model Administrador {
-  id    String @id @default(uuid())
-  email String @unique
-  nome  String
-  senha String
-  RG    RG[]
+  id       String     @id @default(uuid())
+  email    String     @unique
+  nome     String
+  senha    String
+  RG       RG[]
+  Certidao Certidao[]
 }
 
 model TiposDeStatus {
@@ -54,6 +56,8 @@ model RG {
   NomeDoPai            String
   NomeDaMae            String
   CPF                  String
+  RG                   String
+  DataDeNascimento     String
   Orgao                String
   Motivo               String
   DataDeSolicitacao    String
@@ -74,6 +78,27 @@ model RG {
   HoraDoAgendamento    String
   Resolvido            String
   Observacao           String
+  coordenador          Usuario?       @relation(fields: [coordenadorId], references: [id])
+  coordenadorId        String?
+  Admin                Administrador? @relation(fields: [AdminId], references: [id])
+  AdminId              String?
+}
+
+model Certidao {
+  id                   String         @id @default(uuid())
+  NomeCompleto         String
+  Status               String
+  NomeDoPai            String
+  NomeDaMae            String
+  CPF                  String
+  RG                   String
+  Orgao                String
+  EmailDoSolicitante   String
+  Observacao           String
+  Contato1             String
+  EstadoDeNaturalidade String
+  CidadeDeNaturalidade String
+  DataDeSolicitacao    String
   coordenador          Usuario?       @relation(fields: [coordenadorId], references: [id])
   coordenadorId        String?
   Admin                Administrador? @relation(fields: [AdminId], references: [id])

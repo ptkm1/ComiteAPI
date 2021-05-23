@@ -38,7 +38,7 @@ class UsuarioController {
           senha: bcrypt.hashSync(senha, 8),
           email: email,
           postos: {
-            create: [postos],
+            create: postos,
           },
         },
         include: { postos: true },
