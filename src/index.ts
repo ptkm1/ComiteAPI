@@ -11,8 +11,11 @@ const app = express()
 
 app.use(express.json())
 app.use(cors())
-app.use('/docs', express.static(`${__dirname}/documentation`))
+app.use(express.static(`${__dirname}/documentation/public`))
 app.use(AdminRoutes)
 app.use(RotasUsuarios)
+app.get('*', (req, res) => {
+  res.sendFile(`${__dirname}/documentation/public/index.html`)
+})
 
 app.listen(8080, () => console.log("Rodando!"))
