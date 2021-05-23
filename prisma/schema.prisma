@@ -22,8 +22,8 @@ model Usuario {
   nome       String
   senha      String
   postos     Posto[]
-  Historicos Historicos[]
   RG         RG[]
+  Historicos Historicos[]
 }
 
 model Posto {
