@@ -7,12 +7,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Historicos {
+  id            String   @id @default(uuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  acao          String?
+  coordenador   Usuario? @relation(fields: [coordenadorId], references: [id])
+  coordenadorId String?
+}
+
 model Usuario {
-  id     String  @id @default(uuid())
-  email  String  @unique
-  nome   String
-  senha  String
-  postos Posto[]
+  id         String       @id @default(uuid())
+  email      String       @unique
+  nome       String
+  senha      String
+  postos     Posto[]
+  Historicos Historicos[]
+  RG         RG[]
 }
 
 model Posto {
@@ -24,70 +35,47 @@ model Posto {
   coordenadorId String?
 }
 
-// model registrosRG {
-//   id                   String  @db.VarChar(255)
-//   nome                 String  @db.VarChar(255)
-//   nome_do_pai          String  @db.VarChar(255)
-//   nome_da_mae          String  @db.VarChar(255)
-//   cpf                  String? @db.VarChar(255)
-//   solicitante          String  @db.VarChar(255)
-//   motivo               String? @db.VarChar(255)
-//   data_solicitacao     String  @db.VarChar(255)
-//   cidadao_sabe_cpf     String  @db.VarChar(255)
-//   cidadao_posse_cpf    String  @db.VarChar(255)
-//   telefone1            String  @db.VarChar(255)
-//   telefone2            String? @db.VarChar(255)
-//   telefone3            String? @db.VarChar(255)
-//   whatsapp             String? @db.VarChar(255)
-//   estado_naturalidade  String  @db.VarChar(255)
-//   cidade_naturalidade  String  @db.VarChar(255)
-//   endereco_residencial String  @db.VarChar(255)
-//   cidade_residencia    String  @db.VarChar(255)
-//   cep                  String  @db.VarChar(255)
-//   status               String  @db.VarChar(255)
-//   local_agendamento    String  @db.VarChar(255)
-//   data_agendamento     String  @db.VarChar(255)
-//   hora_agendamento     String  @db.VarChar(255)
-//   resolvido            String  @db.VarChar(255)
-//   observacao           String? @db.VarChar(255)
+model Administrador {
+  id    String @id @default(uuid())
+  email String @unique
+  nome  String
+  senha String
+  RG    RG[]
+}
 
-//   @@ignore
-// }
+model TiposDeStatus {
+  id     Int    @id @default(autoincrement())
+  titulo String @db.VarChar(255)
+}
 
-// /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-// model solicitacaoRG {
-//   id                   String  @db.VarChar(255)
-//   nome                 String  @db.VarChar(50)
-//   nome_pai             String  @db.VarChar(50)
-//   nome_mae             String  @db.VarChar(50)
-//   cpf                  String? @db.VarChar(20)
-//   orgao                String  @db.VarChar(25)
-//   certidao_posse       String  @db.VarChar(255)
-//   rg                   String? @db.VarChar(25)
-//   data_nascimento      String  @db.VarChar(25)
-//   sabe_cpf             String  @db.VarChar(15)
-//   motivo_solicitacao   String  @db.VarChar(50)
-//   data_solicitacao     String  @db.VarChar(15)
-//   usuario              String  @db.VarChar(50)
-//   natural_estado       String  @db.VarChar(50)
-//   natural_cidade       String  @db.VarChar(50)
-//   telefone1            String  @db.VarChar(50)
-//   telefone2            String? @db.VarChar(50)
-//   endereco_residencial String  @db.VarChar(50)
-//   estado_residencial   String  @db.VarChar(50)
-//   cidade_residencial   String  @db.VarChar(50)
-//   cep                  String? @db.VarChar(30)
-//   status               String  @db.VarChar(30)
-//   local_agendamento    String  @db.VarChar(50)
-//   data_agendamento     String  @db.VarChar(15)
-//   hora_agendamento     String  @db.VarChar(30)
-//   horario_marcado      String  @db.VarChar(30)
-//   observacoes          String? @db.VarChar(255)
-
-//   @@ignore
-// }
-
-// model tiposStatus {
-//   id     Int    @id @default(autoincrement())
-//   titulo String @db.VarChar(255)
-// }
+model RG {
+  id                   String         @id @default(uuid())
+  NomeCompleto         String
+  NomeDoPai            String
+  NomeDaMae            String
+  CPF                  String
+  Orgao                String
+  Motivo               String
+  DataDeSolicitacao    String
+  CidadaoSabeCPF       String
+  CidadaoEmPosseCPF    String
+  Contato1             String
+  Contato2             String
+  Contato3             String
+  Whatsapp             String
+  EstadoDeNaturalidade String
+  CidadeDeNaturalidade String
+  EnderecoResidencial  String
+  CidadeResidencial    String
+  Cep                  String
+  Status               String
+  LocalDeAgendamento   String
+  DataDeAgendamento    String
+  HoraDoAgendamento    String
+  Resolvido            String
+  Observacao           String
+  coordenador          Usuario?       @relation(fields: [coordenadorId], references: [id])
+  coordenadorId        String?
+  Admin                Administrador? @relation(fields: [AdminId], references: [id])
+  AdminId              String?
+}
