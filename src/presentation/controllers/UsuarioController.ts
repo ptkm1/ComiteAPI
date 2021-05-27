@@ -11,18 +11,18 @@ class UsuarioController {
 
       const Usuario: | any = await new PrismaClient().usuario.findFirst({
         where: { email },
-
         include: { postos: true },
       })
 
-      delete Usuario.senha
 
       if (!Usuario)
         return Response.status(401).send({ mensagem: 'Usuário Inexistente' })
       if (!(await bcrypt.compare(senha, Usuario?.senha)))
         return Response.status(401).send({ mensagem: 'Senha errada' })
+      delete Usuario.senha
 
       const token = jwt.sign({ id: Usuario.id }, `${process.env.TOKEN_SECRET}`, { expiresIn: '1d' })
+
 
       return Response.status(200).send({ Usuario, token })
     } catch (error) {

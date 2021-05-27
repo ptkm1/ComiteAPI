@@ -6,12 +6,13 @@ class CertidaoController {
     try {
       const data = Request.body
 
-      const Certidao: | any = await new PrismaClient().certidao.create({ data })
+      const Certidao: | any = await new PrismaClient().certidao.create({ data: data , include: { Admin:true, coordenador: true } })
       
       delete Certidao.senha
 
       return Response.status(200).send(Certidao)
     } catch (error) {
+      console.log(error)
       return Response.status(401).send(error)
     }
   }

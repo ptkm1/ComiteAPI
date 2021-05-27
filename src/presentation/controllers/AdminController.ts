@@ -9,12 +9,14 @@ class AdminController {
     try {
       const { email, senha } = Request.body
 
-      const Administrador = await new PrismaClient().administrador.findFirst({ where: { email } })
+      const Administrador: | any = await new PrismaClient().administrador.findFirst({ where: { email } })
 
       if (!Administrador)
         return Response.status(401).send({ mensagem: 'Administrador Inexistente' })
       if (!await bcrypt.compare(senha, Administrador?.senha))
         return Response.status(401).send({ mensagem: 'Senha errada' })
+
+        delete Administrador.senha
 
       const token = jwt.sign({ id: Administrador.id }, `${process.env.TOKEN_SECRET}`, { expiresIn: '1d' })
 

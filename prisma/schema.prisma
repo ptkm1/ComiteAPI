@@ -92,6 +92,7 @@ model Certidao {
   NomeDaMae            String
   CPF                  String
   RG                   String
+  DataDeNascimento     String
   Orgao                String
   EmailDoSolicitante   String
   Observacao           String

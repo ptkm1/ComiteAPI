@@ -19,6 +19,32 @@ class RGController {
     }
   }
 
+  async ListPage(Request: Request, Response: Response) {
+    try {
+      const Registros: | any = await new PrismaClient().rG.findMany({
+        select:{ 
+          id: true,
+          DataDeSolicitacao: true,
+          NomeCompleto: true,
+          Orgao: true,
+          RG: true,
+          Contato1: true,
+          Status: true,
+          LocalDeAgendamento: true,
+          DataDeAgendamento: true,
+          HoraDoAgendamento: true,
+          coordenador: true,
+         }
+      })
+
+      Registros.map((registro: any) => {  return delete registro.coordenador.senha })
+
+      return Response.status(200).send(Registros)
+    } catch (error) {
+      return Response.status(401).send(error)
+    }
+  }
+
   async ListarRegistro(Request: Request, Response: Response) {
     try {
       
@@ -55,6 +81,7 @@ class RGController {
       return Response.status(200).send({ mensagem: "Cadastro Finalizado!" })
 
     } catch (error) {
+      console.log(error)
       return Response.status(401).send(error)
     }
   }
