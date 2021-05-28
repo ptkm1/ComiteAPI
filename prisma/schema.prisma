@@ -31,7 +31,7 @@ model Posto {
   id            String   @id @default(uuid())
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  nome_do_posto String
+  nome_do_posto String   @unique
   coordenador   Usuario? @relation(fields: [coordenadorId], references: [id])
   coordenadorId String?
 }
