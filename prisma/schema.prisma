@@ -28,11 +28,12 @@ model Usuario {
 }
 
 model Posto {
-  id            String   @id @default(uuid())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  nome_do_posto String   @unique
-  coordenador   Usuario? @relation(fields: [coordenadorId], references: [id])
+  id            String     @id @default(uuid())
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  nome_do_posto String     @unique
+  horarios      Horarios[]
+  coordenador   Usuario?   @relation(fields: [coordenadorId], references: [id])
   coordenadorId String?
 }
 
@@ -104,4 +105,11 @@ model Certidao {
   coordenadorId        String?
   Admin                Administrador? @relation(fields: [AdminId], references: [id])
   AdminId              String?
+}
+
+model Horarios {
+  id      String @id @default(uuid())
+  horario String
+  Posto   Posto? @relation(fields: [PostoId], references: [id])
+  PostoId String
 }

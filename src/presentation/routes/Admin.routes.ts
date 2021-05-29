@@ -3,6 +3,7 @@ import { AuthMiddleware } from '../../domain/middlewares/AuthMiddleware'
 import AdminController from '../controllers/AdminController'
 import CertidaoController from '../controllers/CertidaoController'
 import HistoricoController from '../controllers/HistoricoController'
+import HorariosController from '../controllers/HorariosController'
 import PostosController from '../controllers/PostosController'
 import RGController from '../controllers/RGController'
 import UsuarioController from '../controllers/UsuarioController'
@@ -21,7 +22,7 @@ AdminRoutes.delete('/usuarios/:id', UsuarioController.DeletarUsuario)
 /*
  * Postos
  */
-AdminRoutes.get('/postos', PostosController.ListarTodosPostos)
+AdminRoutes.get('/posto', PostosController.ListarTodosPostos)
 AdminRoutes.get('/postos/:id', PostosController.ListarPosto)
 AdminRoutes.post('/postos', PostosController.Criar)
 AdminRoutes.put('/postos/:id', PostosController.AtualizarPosto)
@@ -46,7 +47,7 @@ AdminRoutes.post('/historicos', HistoricoController.Criar)
 AdminRoutes.delete('/historicos/:id', HistoricoController.Deletar)
 
 /**
- * Autenticação Administrador
+ * Administrador
  */
 AdminRoutes.post('/admin/login', AdminController.Autenticar)
 AdminRoutes.get('/admin', AdminController.ListarTodosAdministradores)
@@ -63,6 +64,15 @@ AdminRoutes.get('/certidaos', CertidaoController.ListarTodasCertidaos)
 AdminRoutes.get('/certidaos/:id', CertidaoController.ListarCertidao)
 AdminRoutes.put('/certidaos/:id', CertidaoController.AtualizarCertidao)
 AdminRoutes.delete('/certidaos/:id', CertidaoController.DeletarCertidao)
+
+/**
+ * Horarios
+ */
+ AdminRoutes.post("/horarios", HorariosController.Criar)
+ AdminRoutes.get('/horarios', HorariosController.ListarTodosHorarios)
+ AdminRoutes.get('/horarios/:id', HorariosController.ListarHorario)
+ AdminRoutes.put('/horarios/:id', HorariosController.AtualizarHorario)
+ AdminRoutes.delete('/horarios/:id', HorariosController.DeletarHorario)
 
 
 

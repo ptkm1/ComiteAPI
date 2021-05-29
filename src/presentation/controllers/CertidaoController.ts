@@ -10,10 +10,10 @@ class CertidaoController {
       
       delete Certidao.senha
 
-      return Response.status(200).send(Certidao)
+      return Response.status(200).send({ mensagem: 'Registrado com sucesso seu requerimento' })
     } catch (error) {
       console.log(error)
-      return Response.status(401).send(error)
+      return Response.status(401).send({ mensagem: 'Não foi possivel requisitar essa certidao' })
     }
   }
 

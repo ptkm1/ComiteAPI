@@ -26,7 +26,7 @@ class Postos {
         include: { coordenador: true }
       })
 
-      Postos.map((posto: any) => {  return delete posto.coordenador.senha })
+      // Postos.map((posto: any) => {  return delete posto.coordenador.senha })
 
       return Response.status(200).send(Postos)
     } catch (error) {
