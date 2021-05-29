@@ -12,7 +12,9 @@
     "typescript": "^4.2.4"
   },
   "scripts": {
-    "dev": "ts-node-dev --transpile-only --files src/index.ts"
+    "dev": "ts-node-dev --transpile-only --files src/index.ts",
+    "build": "tsc",
+    "start": "node ./build/index.js"
   },
   "dependencies": {
     "@prisma/client": "^2.23.0",
