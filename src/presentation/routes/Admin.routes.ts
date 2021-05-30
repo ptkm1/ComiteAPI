@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { AuthMiddleware } from '../../domain/middlewares/AuthMiddleware'
+import Authentication from '../../domain/useCases/Authentication/Authentication'
 import AdminController from '../controllers/AdminController'
 import CertidaoController from '../controllers/CertidaoController'
 import HistoricoController from '../controllers/HistoricoController'
@@ -34,7 +35,7 @@ AdminRoutes.delete('/postos/:id', PostosController.DeletarPosto)
 AdminRoutes.get('/rg', RGController.Listar)
 AdminRoutes.get('/rgs', RGController.ListPage)
 AdminRoutes.get('/rg/:id', RGController.ListarRegistro)
-AdminRoutes.post('/rg', AuthMiddleware, RGController.Criar)
+AdminRoutes.post('/rg', RGController.Criar)
 AdminRoutes.put('/rg/:id', RGController.Atualizar)
 AdminRoutes.delete('/rg/:id', RGController.Deletar)
 
@@ -73,6 +74,8 @@ AdminRoutes.delete('/certidaos/:id', CertidaoController.DeletarCertidao)
  AdminRoutes.get('/horarios/:id', HorariosController.ListarHorario)
  AdminRoutes.put('/horarios/:id', HorariosController.AtualizarHorario)
  AdminRoutes.delete('/horarios/:id', HorariosController.DeletarHorario)
+
+ AdminRoutes.get('/logged', AuthMiddleware)
 
 
 

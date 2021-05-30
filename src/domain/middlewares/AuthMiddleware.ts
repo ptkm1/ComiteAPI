@@ -21,6 +21,7 @@ function AuthMiddleware(
     const { id } = data as TokenPayload
 
     Request.idDoUsuario = id
+    Response.send(id)
     return Next()
   } catch {
     return Response.sendStatus(401)

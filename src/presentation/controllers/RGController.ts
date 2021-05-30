@@ -6,9 +6,7 @@ class RGController {
   async Listar(Request: Request, Response: Response) {
     try {
       
-      const Registros: | any = await new PrismaClient().rG.findMany({
-        include: { Admin: true, coordenador: true }
-      })
+      const Registros: | any = await new PrismaClient().rG.findMany()
 
       Registros.map((registro: any) => {  return delete registro.coordenador.senha })
 

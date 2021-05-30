@@ -40,7 +40,7 @@ class Postos {
 
       const Posto: | any = await new PrismaClient().posto.findUnique({
         where: { id },
-        include: { coordenador: true },
+        include: { coordenador: true, horarios: true },
       })
 
       delete Posto.coordenador.senha
