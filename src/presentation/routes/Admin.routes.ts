@@ -6,6 +6,7 @@ import CertidaoController from '../controllers/CertidaoController'
 import HistoricoController from '../controllers/HistoricoController'
 import HorariosController from '../controllers/HorariosController'
 import PostosController from '../controllers/PostosController'
+import RelatoriosController from '../controllers/RelatoriosController'
 import RGController from '../controllers/RGController'
 import StatusController from '../controllers/StatusController'
 import UsuarioController from '../controllers/UsuarioController'
@@ -83,6 +84,15 @@ AdminRoutes.delete('/certidaos/:id', CertidaoController.DeletarCertidao)
  AdminRoutes.get('/status', StatusController.ListarTodosStatus)
  AdminRoutes.put('/status/:id', StatusController.AtualizarStatus)
  AdminRoutes.delete('/status/:id', StatusController.DeletarStatus)
+
+/**
+ * Relatorios
+ */
+ AdminRoutes.post('/relatorios/produtividadediaria', RelatoriosController.ProdutividadeDiária)
+ AdminRoutes.post('/relatorios/reeimpressao', RelatoriosController.Reeimpressao)
+ AdminRoutes.post('/relatorios/agendamento', RelatoriosController.Agendamento)
+
+
 
  AdminRoutes.get('/logged', AuthMiddleware)
 
