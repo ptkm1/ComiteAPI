@@ -7,6 +7,7 @@ import HistoricoController from '../controllers/HistoricoController'
 import HorariosController from '../controllers/HorariosController'
 import PostosController from '../controllers/PostosController'
 import RGController from '../controllers/RGController'
+import StatusController from '../controllers/StatusController'
 import UsuarioController from '../controllers/UsuarioController'
 
 const AdminRoutes = Router()
@@ -74,6 +75,14 @@ AdminRoutes.delete('/certidaos/:id', CertidaoController.DeletarCertidao)
  AdminRoutes.get('/horarios/:id', HorariosController.ListarHorario)
  AdminRoutes.put('/horarios/:id', HorariosController.AtualizarHorario)
  AdminRoutes.delete('/horarios/:id', HorariosController.DeletarHorario)
+
+ /**
+  * Status
+  */
+ AdminRoutes.post('/status', StatusController.Criar)
+ AdminRoutes.get('/status', StatusController.ListarTodosStatus)
+ AdminRoutes.put('/status/:id', StatusController.AtualizarStatus)
+ AdminRoutes.delete('/status/:id', StatusController.DeletarStatus)
 
  AdminRoutes.get('/logged', AuthMiddleware)
 
