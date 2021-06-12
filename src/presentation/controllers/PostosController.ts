@@ -23,10 +23,9 @@ class Postos {
   public async ListarTodosPostos(Request: Request, Response: Response) {
     try {
       const Postos: | any = await new PrismaClient().posto.findMany({
-        include: { coordenador: true }
+        include: { coordenador: { select: { id: true, nome: true, email: true } } }
       })
 
-      // Postos.map((posto: any) => {  return delete posto.coordenador.senha })
 
       return Response.status(200).send(Postos)
     } catch (error) {

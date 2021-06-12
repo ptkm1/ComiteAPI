@@ -5,22 +5,23 @@ class RGController {
 
   async Listar(Request: Request, Response: Response) {
     try {
-      
-      const Registros: | any = await new PrismaClient().rG.findMany()
 
-      Registros.map((registro: any) => {  return delete registro.coordenador.senha })
+      const Registros: any = await new PrismaClient().rG.findMany({
+        include: { coordenador: { select: { id: true, nome: true, email: true } }, Admin: { select: { id: true, nome: true, email: true } } }
+      })
 
       return Response.status(200).send(Registros)
 
     } catch (error) {
+      console.log(error)
       return Response.status(401).send(error)
     }
   }
 
   async ListPage(Request: Request, Response: Response) {
     try {
-      const Registros: | any = await new PrismaClient().rG.findMany({
-        select:{ 
+      const Registros: any = await new PrismaClient().rG.findMany({
+        select: {
           id: true,
           DataDeSolicitacao: true,
           NomeCompleto: true,
@@ -31,11 +32,9 @@ class RGController {
           LocalDeAgendamento: true,
           DataDeAgendamento: true,
           HoraDoAgendamento: true,
-          coordenador: true,
-         }
+          coordenador: { select: { id: true, nome: true, email: true } }
+        }
       })
-
-      Registros.map((registro: any) => {  return delete registro.coordenador.senha })
 
       return Response.status(200).send(Registros)
     } catch (error) {
@@ -45,12 +44,12 @@ class RGController {
 
   async ListarRegistro(Request: Request, Response: Response) {
     try {
-      
+
       const { id } = Request.params
 
       const Registro: | any = await new PrismaClient().rG.findUnique({
-        where: {id},
-        include: { Admin: true, coordenador: true }
+        where: { id },
+        include: { coordenador: { select: { id: true, nome: true, email: true } }, Admin: { select: { id: true, nome: true, email: true } } }
       })
 
       delete Registro.coordenador.senha
@@ -64,17 +63,15 @@ class RGController {
 
   async Criar(Request: Request, Response: Response) {
     try {
-      
+
       const Dados = Request.body
 
       console.log(Dados)
 
       const Ficha = await new PrismaClient().rG.create({
         data: Dados,
-        include: { Admin: true, coordenador: true }
+        include: { coordenador: { select: { id: true, nome: true, email: true } }, Admin: { select: { id: true, nome: true, email: true } }}
       })
-
-      console.log(Ficha)
 
       return Response.status(200).send({ mensagem: "Cadastro Finalizado!" })
 
@@ -103,7 +100,7 @@ class RGController {
 
   async Deletar(Request: Request, Response: Response) {
     try {
-      
+
       const { id } = Request.params
 
       await new PrismaClient().rG.delete({ where: { id } })

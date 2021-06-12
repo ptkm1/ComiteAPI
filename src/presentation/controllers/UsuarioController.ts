@@ -58,7 +58,7 @@ class UsuarioController {
     try {
 
       const Usuarios: | any = await new PrismaClient().usuario.findMany({
-        include: { postos: true, Historicos: true },
+        select: { id: true, email: true, nome: true, postos: true, Historicos: true }
       })
 
       Usuarios.map((usuario: any) => {  return delete usuario.senha })
@@ -75,10 +75,8 @@ class UsuarioController {
 
       const Usuario: | any = await new PrismaClient().usuario.findUnique({
         where: { id },
-        include: { postos: true, Historicos: true },
+        select: { id: true, nome: true, email: true, Certidao: true, RG: true, postos: true, Historicos: true },
       })
-
-      delete Usuario.senha
 
       return Response.status(200).send(Usuario)
     } catch (error) {
