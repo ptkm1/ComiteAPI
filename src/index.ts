@@ -18,4 +18,4 @@ app.get('*', (req, res) => {
   res.sendFile(`${__dirname}/documentation/public/index.html`)
 })
 
-app.listen(8080, () => console.log("Rodando!"))
+app.listen(process.env.PORT || 8080, () => console.log("Rodando!"))
