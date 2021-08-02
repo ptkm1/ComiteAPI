@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Hora` MODIFY `updated_at` TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP(0);

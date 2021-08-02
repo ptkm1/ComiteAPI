@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -13,8 +13,10 @@ model Historicos {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   acao          String?
-  coordenador   Usuario? @relation(fields: [coordenadorId], references: [id])
   coordenadorId String?
+  coordenador   Usuario? @relation(fields: [coordenadorId], references: [id])
+
+  @@index([coordenadorId], name: "coordenadorId")
 }
 
 model Usuario {
@@ -22,10 +24,10 @@ model Usuario {
   email      String       @unique
   nome       String
   senha      String
+  Certidao   Certidao[]
+  Historicos Historicos[]
   postos     Posto[]
   RG         RG[]
-  Historicos Historicos[]
-  Certidao   Certidao[]
 }
 
 model Posto {
@@ -33,9 +35,11 @@ model Posto {
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   nome_do_posto String
-  horarios      Horarios[]
-  coordenador   Usuario?   @relation(fields: [coordenadorId], references: [id])
   coordenadorId String?
+  coordenador   Usuario?   @relation(fields: [coordenadorId], references: [id])
+  horarios      Horarios[]
+
+  @@index([coordenadorId], name: "coordenadorId")
 }
 
 model Administrador {
@@ -43,8 +47,8 @@ model Administrador {
   email    String     @unique
   nome     String
   senha    String
-  RG       RG[]
   Certidao Certidao[]
+  RG       RG[]
 }
 
 model TiposDeStatus {
@@ -53,37 +57,40 @@ model TiposDeStatus {
 }
 
 model RG {
-  id                   String         @id @default(uuid())
-  NomeCompleto         String
-  NomeDoPai            String
-  NomeDaMae            String
-  CPF                  String
-  RG                   String
-  DataDeNascimento     String
-  Orgao                String
-  Motivo               String
-  DataDeSolicitacao    String
-  CidadaoSabeCPF       String
-  CidadaoEmPosseCPF    String
-  Contato1             String
-  Contato2             String?
-  Contato3             String?
-  Whatsapp             String?
-  EstadoDeNaturalidade String
-  CidadeDeNaturalidade String
-  EnderecoResidencial  String
-  CidadeResidencial    String
-  Cep                  String
-  Status               String
-  LocalDeAgendamento   String
-  DataDeAgendamento    String
-  HoraDoAgendamento    String
-  Resolvido            String
-  Observacao           String
-  coordenador          Usuario?       @relation(fields: [coordenadorId], references: [id])
-  coordenadorId        String?
-  Admin                Administrador? @relation(fields: [AdminId], references: [id])
-  AdminId              String?
+  id                     String         @id @default(uuid())
+  NomeCompleto           String
+  NomeDoPai              String
+  NomeDaMae              String
+  CPF                    String
+  Orgao                  String
+  Motivo                 String
+  DataDeSolicitacao      String
+  CidadaoSabeCPF         String
+  Contato1               String
+  Contato2               String?
+  Contato3               String?
+  Whatsapp               String?
+  EstadoDeNaturalidade   String
+  CidadeDeNaturalidade   String
+  EnderecoResidencial    String
+  CidadeResidencial      String
+  Cep                    String
+  Status                 String
+  LocalDeAgendamento     String
+  DataDeAgendamento      String
+  HoraDoAgendamento      String
+  Resolvido              String
+  Observacao             String
+  coordenadorId          String?
+  AdminId                String?
+  RG                     String
+  DataDeNascimento       String
+  CidadaoEmPosseCertidao String
+  Admin                  Administrador? @relation(fields: [AdminId], references: [id])
+  coordenador            Usuario?       @relation(fields: [coordenadorId], references: [id])
+
+  @@index([AdminId], name: "AdminId")
+  @@index([coordenadorId], name: "coordenadorId")
 }
 
 model Certidao {
@@ -94,7 +101,6 @@ model Certidao {
   NomeDaMae            String
   CPF                  String
   RG                   String
-  DataDeNascimento     String
   Orgao                String
   EmailDoSolicitante   String
   Observacao           String
@@ -102,15 +108,32 @@ model Certidao {
   EstadoDeNaturalidade String
   CidadeDeNaturalidade String
   DataDeSolicitacao    String
-  coordenador          Usuario?       @relation(fields: [coordenadorId], references: [id])
   coordenadorId        String?
-  Admin                Administrador? @relation(fields: [AdminId], references: [id])
   AdminId              String?
+  DataDeNascimento     String
+  Admin                Administrador? @relation(fields: [AdminId], references: [id])
+  coordenador          Usuario?       @relation(fields: [coordenadorId], references: [id])
+
+  @@index([AdminId], name: "AdminId")
+  @@index([coordenadorId], name: "coordenadorId")
 }
 
 model Horarios {
-  id      String @id @default(uuid())
+  id      String  @id @default(uuid())
   horario String
-  Posto   Posto? @relation(fields: [PostoId], references: [id])
   PostoId String
+  marcado String?
+  Posto   Posto   @relation(fields: [PostoId], references: [id])
+
+  @@index([PostoId], name: "PostoId")
+}
+
+model Hora {
+  id      Int      @id @default(autoincrement())
+  posto   String   @db.VarChar(20)
+  dia     Int
+  dianome String   @db.VarChar(20)
+  data    DateTime @db.Date
+  hora    DateTime @db.Time(0)
+  marcado String   @db.VarChar(3)
 }

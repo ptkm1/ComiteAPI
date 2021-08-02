@@ -4,6 +4,7 @@ import Authentication from "../../domain/useCases/Authentication/Authentication"
 import AdminController from "../controllers/AdminController";
 import CertidaoController from "../controllers/CertidaoController";
 import HistoricoController from "../controllers/HistoricoController";
+import HoraController from "../controllers/HoraController";
 import HorariosController from "../controllers/HorariosController";
 import PostosController from "../controllers/PostosController";
 import RelatoriosController from "../controllers/RelatoriosController";
@@ -20,7 +21,7 @@ const AdminRoutes = Router();
 AdminRoutes.get("/usuarios", UsuarioController.ListarTodosUsuarios);
 AdminRoutes.get("/usuarios/:id", UsuarioController.ListarUsuario);
 AdminRoutes.post("/usuarios", UsuarioController.Criar);
-AdminRoutes.put("/usuarios/:id", UsuarioController.AtualizarUsuario);
+AdminRoutes.patch("/usuarios/:id", UsuarioController.AtualizarUsuario);
 AdminRoutes.delete("/usuarios/:id", UsuarioController.DeletarUsuario);
 
 /*
@@ -36,7 +37,7 @@ AdminRoutes.delete("/postos/:id", PostosController.DeletarPosto);
  * Cadastro de RG
  */
 AdminRoutes.get("/rg", RGController.Listar);
-AdminRoutes.get("/rgs", RGController.ListPage);
+AdminRoutes.post("/rgs", RGController.ListPage);
 AdminRoutes.get("/rg/:id", RGController.ListarRegistro);
 AdminRoutes.post("/rg", RGController.Criar);
 AdminRoutes.put("/rg/:id", RGController.Atualizar);
@@ -58,7 +59,7 @@ AdminRoutes.delete("/historicos/:id", HistoricoController.Deletar);
  */
 AdminRoutes.post("/admin/login", AdminController.Autenticar);
 AdminRoutes.get("/admin", AdminController.ListarTodosAdministradores);
-AdminRoutes.get("/admin/:id", AdminController.ListarUsuario);
+AdminRoutes.get("/admin/:id", AdminController.ListarAdmin);
 AdminRoutes.post("/admin", AdminController.Criar);
 AdminRoutes.put("/admin/:id", AdminController.AtualizarAdministrador);
 AdminRoutes.delete("/admin/:id", AdminController.DeletarUsuario);
@@ -98,6 +99,11 @@ AdminRoutes.post(
 );
 AdminRoutes.post("/relatorios/reeimpressao", RelatoriosController.Reeimpressao);
 AdminRoutes.post("/relatorios/agendamento", RelatoriosController.Agendamento);
+
+// Horas
+AdminRoutes.post("/horaposto", HoraController.ListarHorasPorPosto);
+AdminRoutes.get("/horas-geral", HoraController.ListarTodosHora);
+AdminRoutes.put("/horas/marcar", HoraController.MarcarHora);
 
 AdminRoutes.post("/sendmail", SendMailController.send);
 
