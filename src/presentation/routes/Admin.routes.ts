@@ -102,6 +102,7 @@ AdminRoutes.post("/relatorios/agendamento", RelatoriosController.Agendamento);
 
 // Horas
 AdminRoutes.post("/horaposto", HoraController.ListarHorasPorPosto);
+AdminRoutes.get("/horaposto/:Posto", HoraController.ListarDatas);
 AdminRoutes.get("/horas-geral", HoraController.ListarTodosHora);
 AdminRoutes.put("/horas/marcar", HoraController.MarcarHora);
 

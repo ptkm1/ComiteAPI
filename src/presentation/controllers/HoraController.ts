@@ -41,6 +41,22 @@ class Hora {
     }
   }
 
+  public async ListarDatas(Request: Request, Response: Response) {
+    const { Posto } = Request.params;
+
+    try {
+      const Datas: any = await new PrismaClient().hora.findMany({
+        where: { posto: Posto },
+        select: { posto: true, data: true },
+      });
+
+      return Response.status(200).send(Datas);
+    } catch (error) {
+      console.log(error);
+      return Response.status(401).send(error);
+    }
+  }
+
   public async MarcarHora(Request: Request, Response: Response) {
     const { id } = Request.body;
 
