@@ -1,0 +1,14 @@
+-- AlterTable
+ALTER TABLE `Certidao` ADD COLUMN `Comarca` VARCHAR(191),
+    ADD COLUMN `DataDaCertidao` VARCHAR(191),
+    ADD COLUMN `DataDeRegistro` VARCHAR(191),
+    ADD COLUMN `Distrito` VARCHAR(191),
+    ADD COLUMN `EstadoRegistro` VARCHAR(191),
+    ADD COLUMN `Folha` VARCHAR(191),
+    ADD COLUMN `Livro` VARCHAR(191),
+    ADD COLUMN `Resposta` VARCHAR(191),
+    ADD COLUMN `Termo` VARCHAR(191),
+    ADD COLUMN `TipoDeCertidao` VARCHAR(191);
+
+-- AlterTable
+ALTER TABLE `Hora` MODIFY `id` INTEGER NOT NULL AUTO_INCREMENT;

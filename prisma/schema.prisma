@@ -112,7 +112,17 @@ model Certidao {
   AdminId              String?
   DataDeNascimento     String
   Admin                Administrador? @relation(fields: [AdminId], references: [id])
-  coordenador          Usuario?       @relation(fields: [coordenadorId], references: [id])
+  Coordenador          Usuario?       @relation(fields: [coordenadorId], references: [id])
+  TipoDeCertidao       String?
+  DataDeRegistro       String?
+  DataDaCertidao       String?
+  Resposta             String?
+  EstadoRegistro       String?
+  Comarca              String?
+  Distrito             String?
+  Livro                String?
+  Folha                String?
+  Termo                String?
 
   @@index([AdminId], name: "AdminId")
   @@index([coordenadorId], name: "coordenadorId")
