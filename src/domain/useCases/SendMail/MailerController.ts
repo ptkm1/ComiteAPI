@@ -18,17 +18,22 @@ export class MailtrapMailProvider implements IMailProvider {
 
   public async sendMail(message: IMessage): Promise<void> {
     console.log(message);
-    await this.transporter.sendMail({
-      to: {
-        name: message.to.name,
-        address: message.to.email,
-      },
-      from: {
-        name: message.from.name,
-        address: "sande@identidadedoc.online",
-      },
-      subject: message.subject,
-      html: message.body,
-    });
+    try {
+      await this.transporter.sendMail({
+        to: {
+          name: message.to.name,
+          address: message.to.email,
+        },
+        from: {
+          name: message.from.name,
+          address: "sande@identidadedoc.online",
+        },
+        subject: message.subject,
+        html: message.body,
+      });
+    } catch (error) {
+      console.log("[Error Returned at sendmail]");
+      console.log(error);
+    }
   }
 }
