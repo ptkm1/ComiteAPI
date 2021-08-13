@@ -23,7 +23,7 @@ class RGController {
     try {
       const Registros: any = await new PrismaClient().rG.findMany({
         where: {
-          coordenadorId: id,
+          Orgao: id,
         },
         select: {
           id: true,

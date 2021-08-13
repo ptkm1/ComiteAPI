@@ -18,20 +18,40 @@ const AdminRoutes = Router();
 /*
  * Usuarios
  */
-AdminRoutes.get("/usuarios", UsuarioController.ListarTodosUsuarios);
-AdminRoutes.get("/usuarios/:id", UsuarioController.ListarUsuario);
-AdminRoutes.post("/usuarios", UsuarioController.Criar);
-AdminRoutes.patch("/usuarios/:id", UsuarioController.AtualizarUsuario);
-AdminRoutes.delete("/usuarios/:id", UsuarioController.DeletarUsuario);
+AdminRoutes.get(
+  "/usuarios",
+  // AuthMiddleware,
+  UsuarioController.ListarTodosUsuarios
+);
+AdminRoutes.get(
+  "/usuarios/:id",
+  // AuthMiddleware,
+  UsuarioController.ListarUsuario
+);
+AdminRoutes.post("/usuarios", AuthMiddleware, UsuarioController.Criar);
+AdminRoutes.patch(
+  "/usuarios/:id",
+  AuthMiddleware,
+  UsuarioController.AtualizarUsuario
+);
+AdminRoutes.delete(
+  "/usuarios/:id",
+  AuthMiddleware,
+  UsuarioController.DeletarUsuario
+);
 
 /*
  * Postos
  */
-AdminRoutes.get("/posto", PostosController.ListarTodosPostos);
-AdminRoutes.get("/postos/:id", PostosController.ListarPosto);
-AdminRoutes.post("/postos", PostosController.Criar);
-AdminRoutes.put("/postos/:id", PostosController.AtualizarPosto);
-AdminRoutes.delete("/postos/:id", PostosController.DeletarPosto);
+AdminRoutes.get("/posto", AuthMiddleware, PostosController.ListarTodosPostos);
+AdminRoutes.get("/postos/:id", AuthMiddleware, PostosController.ListarPosto);
+AdminRoutes.post("/postos", AuthMiddleware, PostosController.Criar);
+AdminRoutes.put("/postos/:id", AuthMiddleware, PostosController.AtualizarPosto);
+AdminRoutes.delete(
+  "/postos/:id",
+  AuthMiddleware,
+  PostosController.DeletarPosto
+);
 
 /**
  * Cadastro de RG
@@ -58,7 +78,11 @@ AdminRoutes.delete("/historicos/:id", HistoricoController.Deletar);
  * Administrador
  */
 AdminRoutes.post("/admin/login", AdminController.Autenticar);
-AdminRoutes.get("/admin", AdminController.ListarTodosAdministradores);
+AdminRoutes.get(
+  "/admin",
+  AuthMiddleware,
+  AdminController.ListarTodosAdministradores
+);
 AdminRoutes.get("/admin/:id", AdminController.ListarAdmin);
 AdminRoutes.post("/admin", AdminController.Criar);
 AdminRoutes.put("/admin/:id", AdminController.AtualizarAdministrador);
@@ -67,11 +91,27 @@ AdminRoutes.delete("/admin/:id", AdminController.DeletarUsuario);
 /**
  * Certidao
  */
-AdminRoutes.post("/certidaos", CertidaoController.Criar);
-AdminRoutes.get("/certidaos", CertidaoController.ListarTodasCertidaos);
-AdminRoutes.get("/certidaos/:id", CertidaoController.ListarCertidao);
-AdminRoutes.put("/certidaos/:id", CertidaoController.AtualizarCertidao);
-AdminRoutes.delete("/certidaos/:id", CertidaoController.DeletarCertidao);
+AdminRoutes.post("/certidaos", AuthMiddleware, CertidaoController.Criar);
+AdminRoutes.get(
+  "/certidaos",
+  AuthMiddleware,
+  CertidaoController.ListarTodasCertidaos
+);
+AdminRoutes.get(
+  "/certidaos/:id",
+  AuthMiddleware,
+  CertidaoController.ListarCertidao
+);
+AdminRoutes.put(
+  "/certidaos/:id",
+  AuthMiddleware,
+  CertidaoController.AtualizarCertidao
+);
+AdminRoutes.delete(
+  "/certidaos/:id",
+  AuthMiddleware,
+  CertidaoController.DeletarCertidao
+);
 
 /**
  * Horarios
